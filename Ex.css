@@ -1,0 +1,27 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+#first{
+    padding: 10px;
+    color:rgb(242, 10, 10);
+    background-color: rgb(5, 236, 43);
+    font-style: italic;
+    height: 170px;
+    width: 300px;
+    border: 3px dotted black;
+    display: inline-block;
+   
+    
+}
+#second{
+    padding: 10px;
+    color:rgb(242, 234, 10);
+    background-color: rgb(236, 40, 5);
+    font-style: italic;
+    height: 170px;
+    width: 300px;
+    border: 3px dotted black;
+    inline-size: none;
+     display: inline-block;
+}

@@ -1,0 +1,37 @@
+*{
+     text-align: center; 
+    margin: 0;
+    padding: 0;
+    background-color: aqua;
+}
+div{
+    text-align: left;
+}
+h1{
+    background-color: blueviolet;
+    border: 3px dotted black;
+    
+    
+}
+.demo{
+    color: rgb(252, 54, 4);
+    font-style: italic;
+    font-size: 20px;
+}
+#a a{
+    display:block;
+    text-decoration: none;
+    text-align: left;
+}
+#b a{
+    display:block;
+    text-decoration: none;
+    text-align: center;
+
+}
+#c a{
+
+    display:block;
+    text-decoration: none;
+    text-align: right;
+}
