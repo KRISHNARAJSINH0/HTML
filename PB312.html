@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Rounded Images</title>
+
+<style>
+    /* Round image (circle) */
+    .circle-img {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;   /* Makes the image circular */
+        object-fit: cover;    /* Keeps image ratio correct */
+    }
+
+    /* Rounded corners (not full circle) */
+    .rounded-img {
+        width: 250px;
+        border-radius: 20px; 
+        box-shadow: 10px 10px 10px grey;
+    }
+</style>
+</head>
+
+<body>
+
+<h2>Circular Image</h2>
+<img src="d1.jpeg" class="circle-img" alt="Circle Image">
+
+<h2>Rounded Corners Image</h2>
+<img src="d2.jpeg" class="rounded-img" alt="Rounded Image">
+
+</body>
+</html>
