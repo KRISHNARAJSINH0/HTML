@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DCODE - Email for Developers</title>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #7f42a7;
+            --secondary: #6600c5;
+            --accent: #5300a0;
+            --dark: #0a0a0a;
+            --light: #e7e7e7;
+            --gray: #a7a7a7;
+            --border: #2a2a2a;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0f2a 50%, #0a0a1a 100%);
+            color: var(--light);
+            min-height: 100vh;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .grid-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(102, 0, 197, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(102, 0, 197, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.3;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary), transparent);
+            opacity: 0.1;
+            filter: blur(40px);
+            animation: float 20s infinite linear;
+        }
+
+        .shape:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 400px;
+            height: 400px;
+            top: 60%;
+            left: 80%;
+            animation-delay: 5s;
+            background: radial-gradient(circle, var(--secondary), transparent);
+        }
+
+        .shape:nth-child(3) {
+            width: 250px;
+            height: 250px;
+            top: 80%;
+            left: 20%;
+            animation-delay: 10s;
+            background: radial-gradient(circle, var(--accent), transparent);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            33% {
+                transform: translate(30px, -50px) rotate(120deg);
+            }
+            66% {
+                transform: translate(-20px, 20px) rotate(240deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--light);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: particle-float 15s infinite linear;
+        }
+
+        @keyframes particle-float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .container.slide-left {
+            transform: translateX(-30%);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5rem;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 3rem;
+            font-weight: 300;
+            background: linear-gradient(to right, var(--light), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(127, 66, 167, 0.5);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            margin-left: -5%;
+        }
+
+        nav a {
+            font-size: 1rem;
+            letter-spacing: 0.1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            z-index: 999;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover:after {
+            width: 100%;
+        }
+
+        .signing {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            z-index: 999;
+            box-shadow: 0 4px 15px rgba(102, 0, 197, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .signing:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .signing:hover:before {
+            left: 100%;
+        }
+
+        .signing:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 0, 197, 0.5);
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: calc(90vh - 6rem);
+        }
+
+        .content {
+            max-width: 40rem;
+            margin-left: 10%;
+            z-index: 999;
+        }
+
+        .tag-box {
+            position: relative;
+            width: 18rem;
+            height: 2.5rem;
+            border-radius: 50px;
+            background: linear-gradient(to right, #656565, var(--primary), var(--secondary), var(--accent), #757575, #656565);
+            background-size: 200%;
+            animation: animationgradient 2.5s linear infinite;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes animationgradient {
+            to {
+                background-position: 200%;
+            }
+        }
+
+        .tag-box .tag {
+            position: absolute;
+            inset: 3px 3px 3px 3px;
+            background-color: var(--dark);
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.5s ease;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .tag-box .tag:hover {
+            color: var(--primary);
+        }
+
+        .content h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            margin: 2rem 0;
+            line-height: 1.2;
+            text-shadow: 0 0 10px rgba(128, 128, 128, 0.418);
+            background: linear-gradient(to right, var(--light), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .description {
+            font-size: 1.2rem;
+            letter-spacing: 0.05em;
+            max-width: 35rem;
+            color: var(--gray);
+        }
+
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+
+        .get-start {
+            text-decoration: none;
+            border: 1px solid var(--border);
+            padding: 0.7rem 1.2rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+            color: var(--light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .get-start:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(127, 66, 167, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .get-start:hover:before {
+            left: 100%;
+        }
+
+        .get-start:hover {
+            background-color: #1a1a1a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .signing-main {
+            text-decoration: none;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.6rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 0, 197, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .signing-main:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .signing-main:hover:before {
+            left: 100%;
+        }
+
+        .signing-main:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 0, 197, 0.5);
+        }
+
+        .robot-3D {
+            position: absolute;
+            top: 0;
+            right: -20%;
+            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            z-index: 10;
+            filter: drop-shadow(0 0 20px rgba(102, 0, 197, 0.5));
+        }
+
+        .robot-3D.slide-left {
+            transform: translateX(-50%);
+        }
+
+        /* Enhanced Auth Page Styles */
+        .auth-container {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 40%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            transition: right 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            border-left: 1px solid rgba(102, 0, 197, 0.3);
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .auth-container.active {
+            right: 0;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(102, 0, 197, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(102, 0, 197, 0.4);
+            transform: rotate(90deg);
+        }
+
+        .auth-content {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .auth-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, var(--light), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .auth-subtitle {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+
+        .auth-tabs {
+            display: flex;
+            background: rgba(42, 42, 42, 0.5);
+            border-radius: 12px;
+            padding: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 0.8rem;
+            text-align: center;
+            background: transparent;
+            border: none;
+            color: var(--gray);
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .auth-tab.active {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 10px rgba(102, 0, 197, 0.3);
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            position: relative;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .form-group input {
+            padding: 1rem 1rem 1rem 3rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 2px rgba(102, 0, 197, 0.2);
+        }
+
+        .form-icon {
+            position: absolute;
+            left: 1rem;
+            top: 2.6rem;
+            color: var(--gray);
+            transition: color 0.3s ease;
+        }
+
+        .form-group input:focus + .form-icon {
+            color: var(--secondary);
+        }
+
+        .auth-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .remember-me input {
+            accent-color: var(--secondary);
+        }
+
+        .forgot-password {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password:hover {
+            color: var(--secondary);
+        }
+
+        .auth-btn {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            box-shadow: 0 4px 15px rgba(102, 0, 197, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .auth-btn:hover:before {
+            left: 100%;
+        }
+
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 0, 197, 0.5);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: var(--gray);
+        }
+
+        .divider:before,
+        .divider:after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .divider span {
+            padding: 0 1rem;
+            font-size: 0.9rem;
+        }
+
+        .social-auth {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--gray);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .social-btn:hover {
+            background: rgba(102, 0, 197, 0.1);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .auth-footer {
+            text-align: center;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .auth-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .auth-footer a:hover {
+            color: var(--secondary);
+        }
+
+        /* Form states */
+        .signup-form {
+            display: none;
+        }
+
+        .signin-form.active,
+        .signup-form.active {
+            display: flex;
+        }
+
+        @media (max-width:1300px) {
+            header {
+                padding: 1rem 0.5rem;
+            }
+            .content {
+                margin-top: 85%;
+            }
+            .robot-3D {
+                scale: 0.8;
+                top: -20%;
+                right: 2%;
+            }
+            .auth-container {
+                width: 50%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 0.1rem;
+            }
+            nav {
+                display: none;
+            }
+            header h1 {
+                font-size: 2rem;
+            }
+            .signing {
+                padding: 0.6rem 1.5rem;
+            }
+            .content {
+                margin-top: 25rem;
+            }
+            .robot-3D {
+                scale: 0.5;
+                top: -25%;
+                right: 0;
+            }
+            .content {
+                max-width: 30rem;
+                margin-left: 10%;
+            }
+            .tag-box {
+                width: 12rem;
+            }
+            .content h1 {
+                font-size: 2.5rem;
+            }
+            .description {
+                font-size: 1rem;
+            }
+            .get-start {
+                font-size: 0.8rem;
+                padding: 0.8rem 1.2rem;
+            }
+            .signing-main {
+                font-size: 0.8rem;
+                padding: 0.8rem 2rem;
+            }
+            .auth-container {
+                width: 100%;
+            }
+            .auth-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="background-animation">
+        <div class="grid-pattern"></div>
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+        <div class="particles" id="particles-container"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1 data-aos="fade-down" data-aos-duration="1500" class="logo">DCODE</h1>
+            <nav>
+                <a data-aos="fade-down" data-aos-duration="1500" href="#">COMPANY</a>
+                <a data-aos="fade-down" data-aos-duration="2000" href="##">FEATURES</a>
+                <a data-aos="fade-down" data-aos-duration="2500" href="###">RESOURCES</a>
+                <a data-aos="fade-down" data-aos-duration="3000" href="####">DOCS</a>
+            </nav>
+            <BUTTOn data-aos="fade-down" data-aos-duration="1500" class="signing" type="button" onclick="toggleAuth()">SIGNING</BUTTOn>
+        </header>
+        <main>
+            <div class="content">
+                <div data-aos="fade-zoom-in"
+                    data-aos-easing="ease-in-back"
+                    data-aos-delay="300"
+                    data-aos-offset="0" data-aos-duration="1500" 
+                    class="tag-box">
+                    <div class="tag">INTRUCING &wedbar;</div>
+                </div>
+                <h1 data-aos="fade-zoom-in"
+                    data-aos-easing="ease-in-back"
+                    data-aos-delay="300"
+                    data-aos-offset="0" data-aos-duration="2000" >EMAIL FOR<br>DEVELOPERS</h1>
+                <p data-aos="fade-zoom-in"
+                    data-aos-easing="ease-in-back"
+                    data-aos-delay="300"
+                    data-aos-offset="0" data-aos-duration="2500" class="description">
+                    The best way to reach humans instead of spam folders. Deliver transactional and marketing emails at scale.
+                </p>
+                <div data-aos="fade-zoom-in"
+                    data-aos-easing="ease-in-back"
+                    data-aos-delay="300"
+                    data-aos-offset="0" data-aos-duration="3000" class="buttons">
+                    <a href="#" class="get-start">Documentation &gt;</a>
+                    <a href="#" class="signing-main" onclick="toggleAuth()">Get Started &gt;</a>
+                </div>
+            </div>
+        </main>
+        <spline-viewer data-aos="fade-zoom-in"
+            data-aos-easing="ease-in-back"
+            data-aos-delay="300"
+            data-aos-offset="0" data-aos-duration="3000" class="robot-3D" url="https://prod.spline.design/viRXpkNpgAfMfthy/scene.splinecode"></spline-viewer>
+    </div>
+    
+    <!-- Enhanced Auth Page -->
+    <div class="auth-container">
+        <button class="close-btn" onclick="toggleAuth()">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="auth-content">
+            <div class="auth-header">
+                <h2 class="auth-title" id="auth-title">Welcome Back</h2>
+                <p class="auth-subtitle" id="auth-subtitle">Sign in to your DCODE account</p>
+            </div>
+            
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="signin-tab" onclick="switchAuthTab('signin')">Sign In</button>
+                <button class="auth-tab" id="signup-tab" onclick="switchAuthTab('signup')">Sign Up</button>
+            </div>
+            
+            <!-- Sign In Form -->
+            <form class="auth-form signin-form active" id="signin-form">
+                <div class="form-group">
+                    <label for="signin-email">Email Address</label>
+                    <i class="fas fa-envelope form-icon"></i>
+                    <input type="email" id="signin-email" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signin-password">Password</label>
+                    <i class="fas fa-lock form-icon"></i>
+                    <input type="password" id="signin-password" placeholder="Enter your password" required>
+                </div>
+                
+                <div class="auth-options">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-password">Forgot Password?</a>
+                </div>
+                
+                <button type="submit" class="auth-btn">Sign In</button>
+            </form>
+            
+            <!-- Sign Up Form -->
+            <form class="auth-form signup-form" id="signup-form">
+                <div class="form-group">
+                    <label for="signup-name">Full Name</label>
+                    <i class="fas fa-user form-icon"></i>
+                    <input type="text" id="signup-name" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signup-email">Email Address</label>
+                    <i class="fas fa-envelope form-icon"></i>
+                    <input type="email" id="signup-email" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <i class="fas fa-lock form-icon"></i>
+                    <input type="password" id="signup-password" placeholder="Create a password" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signup-confirm">Confirm Password</label>
+                    <i class="fas fa-lock form-icon"></i>
+                    <input type="password" id="signup-confirm" placeholder="Confirm your password" required>
+                </div>
+                
+                <button type="submit" class="auth-btn">Create Account</button>
+            </form>
+            
+            <div class="divider">
+                <span>Or continue with</span>
+            </div>
+            
+            <div class="social-auth">
+                <button class="social-btn">
+                    <i class="fab fa-google"></i>
+                </button>
+                <button class="social-btn">
+                    <i class="fab fa-github"></i>
+                </button>
+                <button class="social-btn">
+                    <i class="fab fa-twitter"></i>
+                </button>
+            </div>
+            
+            <div class="auth-footer">
+                <span id="auth-footer-text">Don't have an account? </span>
+                <a href="#" id="auth-footer-link" onclick="switchAuthTab('signup')">Sign Up</a>
+            </div>
+        </div>
+    </div>
+    
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.0/build/spline-viewer.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init();
+        
+        // Create floating particles
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random properties
+                const size = Math.random() * 3 + 2;
+                const left = Math.random() * 100;
+                const animationDuration = Math.random() * 10 + 10;
+                const animationDelay = Math.random() * 5;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${left}%`;
+                particle.style.animationDuration = `${animationDuration}s`;
+                particle.style.animationDelay = `${animationDelay}s`;
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        // Toggle auth page
+        function toggleAuth() {
+            const container = document.querySelector('.container');
+            const robot = document.querySelector('.robot-3D');
+            const authContainer = document.querySelector('.auth-container');
+            
+            container.classList.toggle('slide-left');
+            robot.classList.toggle('slide-left');
+            authContainer.classList.toggle('active');
+        }
+        
+        // Switch between sign in and sign up
+        function switchAuthTab(tab) {
+            const signinTab = document.getElementById('signin-tab');
+            const signupTab = document.getElementById('signup-tab');
+            const signinForm = document.getElementById('signin-form');
+            const signupForm = document.getElementById('signup-form');
+            const authTitle = document.getElementById('auth-title');
+            const authSubtitle = document.getElementById('auth-subtitle');
+            const authFooterText = document.getElementById('auth-footer-text');
+            const authFooterLink = document.getElementById('auth-footer-link');
+            
+            if (tab === 'signin') {
+                signinTab.classList.add('active');
+                signupTab.classList.remove('active');
+                signinForm.classList.add('active');
+                signupForm.classList.remove('active');
+                
+                authTitle.textContent = 'Welcome Back';
+                authSubtitle.textContent = 'Sign in to your DCODE account';
+                authFooterText.textContent = "Don't have an account? ";
+                authFooterLink.textContent = 'Sign Up';
+                authFooterLink.onclick = () => switchAuthTab('signup');
+            } else {
+                signinTab.classList.remove('active');
+                signupTab.classList.add('active');
+                signinForm.classList.remove('active');
+                signupForm.classList.add('active');
+                
+                authTitle.textContent = 'Create Account';
+                authSubtitle.textContent = 'Join the DCODE community';
+                authFooterText.textContent = 'Already have an account? ';
+                authFooterLink.textContent = 'Sign In';
+                authFooterLink.onclick = () => switchAuthTab('signin');
+            }
+        }
+        
+        // Form submission handling
+        document.getElementById('signin-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Here you would normally handle the sign in process
+            alert('Sign In functionality would be implemented here!');
+        });
+        
+        document.getElementById('signup-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Here you would normally handle the sign up process
+            alert('Sign Up functionality would be implemented here!');
+        });
+        
+        // Initialize particles on load
+        window.addEventListener('load', createParticles);
+    </script>
+</body>
+</html>
